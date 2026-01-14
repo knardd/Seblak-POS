@@ -1,0 +1,11 @@
+.fi-sidebar {
+    background-color: #1e3a8a !important; /* Custom blue color */
+}
+
+.fi-sideebar-item {
+    color: #ffffff !important; /* White text for sidebar items */
+}
+
+.fi-sidebar-item--active {
+    background-color: #2563eb; /* Slightly lighter blue for active item */
+}
