@@ -1,3 +1,3 @@
 <div>
-    <!-- The only way to do great work is to love what you do. - Steve Jobs -->
+    <!-- Let all your things have their places; let each part of your business have its time. - Benjamin Franklin -->
 </div>

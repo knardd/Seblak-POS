@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\IngredientsResource\Pages;
-use App\Filament\Resources\IngredientsResource\RelationManagers;
-use App\Models\Ingredients;
+use App\Filament\Resources\DrinksResource\Pages;
+use App\Filament\Resources\DrinksResource\RelationManagers;
+use App\Models\Drinks;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class IngredientsResource extends Resource
+class DrinksResource extends Resource
 {
-    protected static ?string $model = Ingredients::class;
+    protected static ?string $model = Drinks::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -33,9 +33,8 @@ class IngredientsResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->disk('public')
-                    ->directory('ingredients')
+                    ->directory('drinks')
                     ->required(),
-                
             ]);
     }
 
@@ -46,7 +45,7 @@ class IngredientsResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money('IDR')
+                    ->money()
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image')
                     ->disk('public')
@@ -85,9 +84,9 @@ class IngredientsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListIngredients::route('/'),
-            'create' => Pages\CreateIngredients::route('/create'),
-            'edit' => Pages\EditIngredients::route('/{record}/edit'),
+            'index' => Pages\ListDrinks::route('/'),
+            'create' => Pages\CreateDrinks::route('/create'),
+            'edit' => Pages\EditDrinks::route('/{record}/edit'),
         ];
     }
 }

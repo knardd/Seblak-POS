@@ -2,23 +2,24 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Pages;
+use Filament\Panel;
+use Filament\Widgets;
+use Filament\PanelProvider;
+use Filament\Pages\Dashboard;
+use Filament\Support\Colors\Color;
+use Filament\Navigation\NavigationItem;
 use Filament\Http\Middleware\Authenticate;
+use Filament\FontProviders\GoogleFontProvider;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\NavigationItem;
-use Filament\Pages;
-use Filament\Pages\Dashboard;
-use Filament\Panel;
-use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
-use Filament\Widgets;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -36,10 +37,14 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->font(
+                'Inter', provider: GoogleFontProvider::class
+            )
             ->navigationItems([
                 NavigationItem::make('Ingredients')
                     ->icon('heroicon-o-shopping-bag')
             ])
+            ->darkMode(false)
             ->assets([
             \Filament\Support\Assets\Css::make('custom', resource_path('css/filament/admin.css')),
             ])
@@ -50,7 +55,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                
+                \App\Filament\Widgets\TransactionsChart::class,
+                \App\Filament\Widgets\RevenueChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,
