@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DrinksResource\Pages;
-use App\Filament\Resources\DrinksResource\RelationManagers;
-use App\Models\Drinks;
+use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DrinksResource extends Resource
+class ProductResource extends Resource
 {
-    protected static ?string $model = Drinks::class;
+    protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -29,11 +29,15 @@ class DrinksResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('Rp '),
+                    ->prefix('Rp.'),
                 Forms\Components\FileUpload::make('image')
                     ->image()
-                    ->disk('public')
-                    ->directory('drinks')
+                    ->required(),
+                Forms\Components\Select::make('category')
+                    ->options([
+                        'Ingredient' => 'Ingredient',
+                        'Drink' => 'Drink',
+                    ])
                     ->required(),
             ]);
     }
@@ -45,12 +49,10 @@ class DrinksResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->money('idr')
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image')
-                    ->disk('public')
-                    ->size(40)
-                    ->circular(),
+                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('category'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -65,7 +67,6 @@ class DrinksResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -84,9 +85,9 @@ class DrinksResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDrinks::route('/'),
-            'create' => Pages\CreateDrinks::route('/create'),
-            'edit' => Pages\EditDrinks::route('/{record}/edit'),
+            'index' => Pages\ListProducts::route('/'),
+            'create' => Pages\CreateProduct::route('/create'),
+            'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
 }

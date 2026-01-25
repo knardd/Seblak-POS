@@ -3,18 +3,33 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 
 class Transactions extends Model
 {
-    protected $fillable = ['user_id', 'total_price'];
-    public function user()
+    protected $fillable = ['user_id', 'total_price', 'status'];
+
+    public static function active()
     {
-        return $this->belongsTo(User::class);
+        // kalau session belum punya transaksi
+        if (!Session::has('transaction_id')) {
+            $transaction = self::create([
+                'status' => 'active',
+                'total_price' => 0,
+            ]);
+
+            Session::put('transaction_id', $transaction->id);
+            return $transaction;
+        }
+
+        // ambil transaksi dari session
+        return self::with('items.product')
+        ->find(Session::get('transaction_id'));
     }
 
-    public function transactionItems()
+    public function items()
     {
-        return $this->hasMany(TransactionItems::class);
+        return $this->hasMany(TransactionItems::class, 'transaction_id');
     }
     
 }

@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionItems extends Model
 {
-    protected $fillable = ['transaction_id', 'ingredient_id', 'quantity', 'price'];
+    protected $fillable = ['transaction_id', 'product_id', 'quantity', 'price'];
 
     public function transaction()
     {
         return $this->belongsTo(Transactions::class);
     }
-
-    public function ingredient()
+    
+    public function product()
     {
-        return $this->belongsTo(Ingredients::class);
+        return $this->belongsTo(Product::class);
     }
 }

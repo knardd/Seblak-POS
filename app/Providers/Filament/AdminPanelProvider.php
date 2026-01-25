@@ -41,8 +41,7 @@ class AdminPanelProvider extends PanelProvider
                 'Inter', provider: GoogleFontProvider::class
             )
             ->navigationItems([
-                NavigationItem::make('Ingredients')
-                    ->icon('heroicon-o-shopping-bag')
+                
             ])
             ->darkMode(false)
             ->assets([
