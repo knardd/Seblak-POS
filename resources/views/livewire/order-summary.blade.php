@@ -28,10 +28,13 @@
 </table>
             </div>
 
-            <div class="mt-4 pt-4 border-t border-gray-200">
+            <div class="mt-4 pt-4 border-t border-gray-200 flex flex-col">
                 <p class="text-lg font-bold text-gray-900">
                     Total: Rp {{ number_format($transaction->items->sum('subtotal'), 0, ',', '.') }}
                 </p>
+                <button wire:click="$dispatch('open-payment-modal', {total: {{ $transaction->items->sum('subtotal') }}})" class="w-full mt-4 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                    Bayar
+                </button>
             </div>
         @else
             <div class="flex-1 flex items-center justify-center text-gray-500 text-sm">

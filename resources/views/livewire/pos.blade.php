@@ -1,8 +1,8 @@
-<div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         @foreach ($products as $product)
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-md">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-md p-2">
         <div class="flex justify-center items-center h-40 bg-gray-50">
-            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-32 h-32 object-cover rounded-lg">
+            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-32 h-32 object-cover rounded-lg aspect-[9/16]">
         </div>
         <div class="p-4">
             <h2 class="font-semibold text-gray-800 truncate">{{ $product->name }}</h2>
